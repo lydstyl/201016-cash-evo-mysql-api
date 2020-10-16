@@ -9,6 +9,7 @@ const getCurrentUser = require('./middlewares/getCurrentUser')
 const sequelize = require('./utils/database')
 const User = require('./models/user')
 const Account = require('./models/account')
+const Moment = require('./models/accountMoment')
 
 const errorController = require('./controllers/error')
 const userRoutes = require('./routes/user')
@@ -19,6 +20,9 @@ const app = express()
 // MODELS ASSOCIATIONS
 User.hasMany(Account)
 Account.belongsTo(User, { constraints: true, onDelete: 'CASCADE' })
+
+Account.hasMany(Moment)
+Moment.belongsTo(Account, { constraints: true, onDelete: 'CASCADE' })
 
 // MIDDLEWARES
 app.all('*', cors)
