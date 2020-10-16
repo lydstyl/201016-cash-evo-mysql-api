@@ -6,7 +6,6 @@ exports.getUsers = (req, res, next) => {
       const users = await User.findAll({
         where: { email: 'lydstyl@gmail.com' },
       })
-      console.log('exports.getCurrentUser -> users', users)
 
       res
         .status(200)
