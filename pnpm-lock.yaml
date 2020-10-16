@@ -1,5 +1,6 @@
 dependencies:
   body-parser: 1.19.0
+  colors: 1.4.0
   dotenv: 8.2.0
   express: 4.17.1
   mysql2: 2.2.5
@@ -218,6 +219,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
+  /colors/1.4.0:
+    dev: false
+    engines:
+      node: '>=0.1.90'
+    resolution:
+      integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==
   /concat-map/0.0.1:
     dev: true
     resolution:
@@ -1433,6 +1440,7 @@ packages:
       integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 specifiers:
   body-parser: ^1.19.0
+  colors: ^1.4.0
   dotenv: ^8.2.0
   express: ^4.17.1
   mysql2: ^2.2.5

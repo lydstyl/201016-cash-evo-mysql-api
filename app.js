@@ -1,3 +1,4 @@
+require('colors')
 const express = require('express')
 const bodyParser = require('body-parser')
 require('dotenv').config()
@@ -23,10 +24,23 @@ app.use(errorController.get404)
       await User.create({ name: 'Gab', email: 'lydstyl@gmail.com' })
     }
 
-    const PORT = 4000
-    app.listen(PORT)
+    const PORT = process.env.PORT || 5000
 
-    console.log(`server run on http://localhost:${PORT}/api/v1/users`)
+    const server = app.listen(
+      PORT,
+      console.log(
+        `Server running in ${process.env.NODE_ENV} mode on port ${PORT} http://localhost:${PORT}/api/v1/users`
+          .yellow.bold
+      )
+    )
+
+    // Handle unhandled promise rejections
+    process.on('unhandledRejection', (err, promise) => {
+      console.log(`Error: ${err.message}`.red)
+
+      // Close server & exit process with failure (1)
+      server.close(() => process.exit(1))
+    })
   } catch (error) {
     console.log('error', error)
   }
