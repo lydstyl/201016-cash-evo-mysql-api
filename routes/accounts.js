@@ -1,7 +1,7 @@
 const express = require('express')
 
 const accountsController = require('../controllers/accounts')
-const momentsController = require('../controllers/accounts')
+const momentsController = require('../controllers/moments')
 
 const router = express.Router()
 
