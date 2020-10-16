@@ -3,25 +3,34 @@ const express = require('express')
 const bodyParser = require('body-parser')
 require('dotenv').config()
 
+const { cors } = require('./middlewares/cors')
+const getCurrentUser = require('./middlewares/getCurrentUser')
+
 const sequelize = require('./utils/database')
 const User = require('./models/user')
+const Account = require('./models/account')
+
 const errorController = require('./controllers/error')
 const userRoutes = require('./routes/user')
+const accountsRoutes = require('./routes/accounts')
 
 const app = express()
 
-app.all('*', (req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+// MODELS ASSOCIATIONS
+User.hasMany(Account)
+Account.belongsTo(User, { constraints: true, onDelete: 'CASCADE' })
 
-  next()
-})
+// MIDDLEWARES
+app.all('*', cors)
 
-// app.use(express.static(environmentRoot + '/public'))
+// app.use(bodyParser.urlencoded({ extended: false }))
+// Body parser
+app.use(express.json())
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(getCurrentUser)
 
 app.use('/api/v1', userRoutes)
+app.use('/api/v1', accountsRoutes)
 app.use(errorController.get404)
 ;(async () => {
   try {
