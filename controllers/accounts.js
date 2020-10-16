@@ -2,6 +2,9 @@ const User = require('../models/user')
 
 const Account = require('../models/account')
 
+// @desc    Create user account
+// @route   POST /api/v1/accounts
+// @access  Private
 exports.postAccounts = async (req, res, next) => {
   try {
     await req.user.createAccount({ name: req.body.name })
@@ -14,6 +17,9 @@ exports.postAccounts = async (req, res, next) => {
   }
 }
 
+// @desc    Get user accounts
+// @route   GET /api/v1/accounts
+// @access  Private
 exports.getAccounts = async (req, res, next) => {
   try {
     const accounts = await req.user.getAccounts()
@@ -26,11 +32,14 @@ exports.getAccounts = async (req, res, next) => {
   }
 }
 
+// @desc    Update user account
+// @route   PUT /api/v1/accounts/:id
+// @access  Private
 exports.putAccounts = async (req, res, next) => {
   try {
     const accounts = await req.user.getAccounts({
       where: {
-        id: req.body.id,
+        id: req.params.id,
       },
     })
 
@@ -41,6 +50,27 @@ exports.putAccounts = async (req, res, next) => {
     res.status(200).json({ success: true, data: account })
   } catch (error) {
     console.log('exports.putAccounts -> error', error)
+
+    res.status(500).json({ success: false, error })
+  }
+}
+
+// @desc    Delete user account
+// @route   DELETE /api/v1/accounts/:id
+// @access  Private
+exports.deleteAccounts = async (req, res, next) => {
+  try {
+    const accounts = await req.user.getAccounts({
+      where: { id: req.params.id },
+    })
+
+    account = accounts[0]
+
+    await account.destroy()
+
+    res.status(200).json({ success: true, msg: 'account destroyed' })
+  } catch (error) {
+    console.log('exports.deleteAccounts -> error', error)
 
     res.status(500).json({ success: false, error })
   }
