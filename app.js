@@ -9,7 +9,7 @@ const getCurrentUser = require('./middlewares/getCurrentUser')
 const sequelize = require('./utils/database')
 const User = require('./models/user')
 const Account = require('./models/account')
-const Moment = require('./models/accountMoment')
+const Moment = require('./models/moment')
 
 const errorController = require('./controllers/error')
 const userRoutes = require('./routes/user')
