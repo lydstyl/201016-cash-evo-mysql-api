@@ -34,6 +34,7 @@ app.use('/api/v1', accountsRoutes)
 app.use(errorController.get404)
 ;(async () => {
   try {
+    // await sequelize.sync({ force: true })
     await sequelize.sync()
 
     const user = await User.findByPk(1)

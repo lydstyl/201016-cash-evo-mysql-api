@@ -9,7 +9,10 @@ const Account = sequelize.define('account', {
     allowNull: false,
     primaryKey: true,
   },
-  name: Sequelize.STRING,
+  name: {
+    type: Sequelize.STRING,
+    unique: true,
+  },
 })
 
 module.exports = Account
