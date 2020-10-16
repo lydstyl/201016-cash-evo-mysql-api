@@ -5,7 +5,7 @@ const Account = require('../models/account')
 // @desc    Create user account
 // @route   POST /api/v1/accounts
 // @access  Private
-exports.postAccounts = async (req, res, next) => {
+exports.postOneUserAccount = async (req, res, next) => {
   try {
     await req.user.createAccount({ name: req.body.name })
 
@@ -20,7 +20,7 @@ exports.postAccounts = async (req, res, next) => {
 // @desc    Get user accounts
 // @route   GET /api/v1/accounts
 // @access  Private
-exports.getAccounts = async (req, res, next) => {
+exports.getAllUserAccounts = async (req, res, next) => {
   try {
     const accounts = await req.user.getAccounts()
 
@@ -35,7 +35,7 @@ exports.getAccounts = async (req, res, next) => {
 // @desc    Update user account
 // @route   PUT /api/v1/accounts/:id
 // @access  Private
-exports.putAccounts = async (req, res, next) => {
+exports.putOneUserAccount = async (req, res, next) => {
   try {
     const accounts = await req.user.getAccounts({
       where: {
@@ -58,7 +58,7 @@ exports.putAccounts = async (req, res, next) => {
 // @desc    Delete user account
 // @route   DELETE /api/v1/accounts/:id
 // @access  Private
-exports.deleteAccounts = async (req, res, next) => {
+exports.deleteOneUserAccount = async (req, res, next) => {
   try {
     const accounts = await req.user.getAccounts({
       where: { id: req.params.id },
