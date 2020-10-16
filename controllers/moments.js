@@ -1,4 +1,5 @@
 const Account = require('../models/account')
+const Moment = require('../models/moment')
 
 // @desc    Create user moment account
 // @route   POST /api/v1/accounts/:accountId/moments
@@ -35,10 +36,17 @@ exports.getAllAccountMoments = async (req, res, next) => {
 }
 
 // @desc    Update user account moments
-// @route   PUT /api/v1/accounts/:accountId/moments/:momentId
+// @route   PUT /api/v1/accounts/moments/:momentId
 // @access  Private
 exports.putOneAccountMoment = async (req, res, next) => {
   try {
+    const moment = await Moment.findByPk(req.params.momentId)
+
+    moment.amount = req.body.amount
+
+    await moment.save()
+
+    res.status(200).json({ success: true, data: moment })
   } catch (error) {
     console.log('exports.putOneAccountMoment -> error', error)
 
@@ -47,10 +55,15 @@ exports.putOneAccountMoment = async (req, res, next) => {
 }
 
 // @desc    Delete user account moments
-// @route   DELETE /api/v1/accounts/:accountId/moments/:momentId
+// @route   DELETE /api/v1/accounts/moments/:momentId
 // @access  Private
 exports.deleteOneAccountMoment = async (req, res, next) => {
   try {
+    const moment = await Moment.findByPk(req.params.momentId)
+
+    await moment.destroy()
+
+    res.status(200).json({ success: true, msg: 'Moment destroyed' })
   } catch (error) {
     console.log('exports.deleteOneAccountMoment -> error', error)
 

@@ -20,12 +20,9 @@ router.get(
   '/accounts/:accountId/moments',
   momentsController.getAllAccountMoments
 )
-router.put(
-  '/accounts/:accountId/moments/:momentId',
-  momentsController.putOneAccountMoment
-)
+router.put('/accounts/moments/:momentId', momentsController.putOneAccountMoment)
 router.delete(
-  '/accounts/:accountId/moments/:momentId',
+  '/accounts/moments/:momentId',
   momentsController.deleteOneAccountMoment
 )
 
