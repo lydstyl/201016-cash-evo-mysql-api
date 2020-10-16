@@ -8,7 +8,6 @@ exports.postOneAccountMoment = async (req, res, next) => {
     const account = await Account.findByPk(req.params.accountId)
 
     const result = await account.createMoment({ amount: req.body.amount })
-    console.log('exports.postOneAccountMoment -> result', result)
 
     res.status(200).json({ success: true, data: result })
   } catch (error) {
@@ -23,6 +22,11 @@ exports.postOneAccountMoment = async (req, res, next) => {
 // @access  Private
 exports.getAllAccountMoments = async (req, res, next) => {
   try {
+    const account = await Account.findByPk(req.params.accountId)
+
+    const moments = await account.getMoments()
+
+    res.status(200).json({ success: true, data: moments })
   } catch (error) {
     console.log('exports.getAllAccountMoments -> error', error)
 
