@@ -1,7 +1,3 @@
-const User = require('../models/user')
-
-const Account = require('../models/account')
-
 // @desc    Create user account
 // @route   POST /api/v1/accounts
 // @access  Private
