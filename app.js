@@ -1,9 +1,10 @@
 require('colors')
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 require('dotenv').config()
 
-const { cors } = require('./middlewares/cors')
+// const { cors } = require('./middlewares/cors')
 const getCurrentUser = require('./middlewares/getCurrentUser')
 
 const sequelize = require('./utils/database')
@@ -25,7 +26,10 @@ Account.hasMany(Moment)
 Moment.belongsTo(Account, { constraints: true, onDelete: 'CASCADE' })
 
 // MIDDLEWARES
-app.all('*', cors)
+
+// Enable Cross-origin resource sharing
+// app.all('*', cors)
+app.use(cors())
 
 // app.use(bodyParser.urlencoded({ extended: false }))
 // Body parser
@@ -59,7 +63,21 @@ app.use(errorController.get404)
 
     // Handle unhandled promise rejections
     process.on('unhandledRejection', (err, promise) => {
-      console.log(`Error: ${err.message}`.red)
+      console.log(`Error 1: ${err.message}`.red)
+
+      // Close server & exit process with failure (1)
+      server.close(() => process.exit(1))
+    })
+
+    // Try to fix EADDRINUSE bugs
+    process.on('uncaughtException', (err, promise) => {
+      console.log(`Error 2: ${err.message}`.red)
+
+      // Close server & exit process with failure (1)
+      server.close(() => process.exit(1))
+    })
+    process.on('SIGTERM', (err, promise) => {
+      console.log(`Error 3: ${err.message}`.red)
 
       // Close server & exit process with failure (1)
       server.close(() => process.exit(1))
