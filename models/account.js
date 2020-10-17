@@ -13,6 +13,7 @@ const Account = sequelize.define('account', {
     type: Sequelize.STRING,
     unique: true,
   },
+  amount: Sequelize.DECIMAL(9, 2),
 })
 
 module.exports = Account

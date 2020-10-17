@@ -8,9 +8,13 @@ exports.postOneAccountMoment = async (req, res, next) => {
   try {
     const account = await Account.findByPk(req.params.accountId)
 
-    const result = await account.createMoment({ amount: req.body.amount })
+    const amount = req.body.amount
 
-    res.status(200).json({ success: true, data: result })
+    await account.update({ amount })
+
+    const result = await account.createMoment({ amount })
+
+    res.status(200).json({ success: true, data: result, amount })
   } catch (error) {
     console.log('exports.postOneAccountMoment -> error', error)
 

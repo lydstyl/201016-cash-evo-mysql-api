@@ -5,9 +5,11 @@ exports.postOneUserAccount = async (req, res, next) => {
   try {
     const result = await req.user.createAccount({ name: req.body.name })
 
+    const account = result.dataValues
+
     res
       .status(200)
-      .json({ success: true, msg: 'Account created', data: result.dataValues })
+      .json({ success: true, msg: 'Account created', data: account })
   } catch (error) {
     console.log('exports.postAccounts -> error', error)
 

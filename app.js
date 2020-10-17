@@ -71,7 +71,7 @@ app.use(errorController.get404)
 
     // Try to fix EADDRINUSE bugs
     process.on('uncaughtException', (err, promise) => {
-      console.log(`Error 2: ${err.message}`.red)
+      console.log(`Error 2: ${err.message}`)
 
       // Close server & exit process with failure (1)
       server.close(() => process.exit(1))
