@@ -3,9 +3,11 @@
 // @access  Private
 exports.postOneUserAccount = async (req, res, next) => {
   try {
-    await req.user.createAccount({ name: req.body.name })
+    const result = await req.user.createAccount({ name: req.body.name })
 
-    res.status(200).json({ success: true, msg: 'Account created' })
+    res
+      .status(200)
+      .json({ success: true, msg: 'Account created', data: result.dataValues })
   } catch (error) {
     console.log('exports.postAccounts -> error', error)
 
