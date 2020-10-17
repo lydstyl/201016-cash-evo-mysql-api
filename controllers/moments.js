@@ -39,6 +39,8 @@ exports.getAllAccountMoments = async (req, res, next) => {
   }
 }
 
+// OTHERS BELLOW SEEMS NOT UTIL
+
 // @desc    Update user account moments
 // @route   PUT /api/v1/accounts/moments/:momentId
 // @access  Private
