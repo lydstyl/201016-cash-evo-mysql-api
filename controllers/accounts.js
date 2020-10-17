@@ -1,3 +1,5 @@
+const Moment = require('../models/moment')
+
 // @desc    Create user account
 // @route   POST /api/v1/accounts
 // @access  Private
@@ -22,7 +24,7 @@ exports.postOneUserAccount = async (req, res, next) => {
 // @access  Private
 exports.getAllUserAccounts = async (req, res, next) => {
   try {
-    const accounts = await req.user.getAccounts()
+    const accounts = await req.user.getAccounts({ include: Moment })
 
     res.status(200).json({ success: true, data: accounts })
   } catch (error) {
