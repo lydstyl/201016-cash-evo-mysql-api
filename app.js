@@ -20,10 +20,18 @@ const app = express()
 
 // MODELS ASSOCIATIONS
 User.hasMany(Account)
-Account.belongsTo(User, { constraints: true, onDelete: 'CASCADE' })
+Account.belongsTo(User, {
+  // constraints: true,
+  // onDelete: 'cascade',
+  // hooks: true,
+})
 
 Account.hasMany(Moment)
-Moment.belongsTo(Account, { constraints: true, onDelete: 'CASCADE' })
+Moment.belongsTo(Account, {
+  // constraints: true,
+  // onDelete: 'cascade',
+  // hooks: true,
+})
 
 // MIDDLEWARES
 

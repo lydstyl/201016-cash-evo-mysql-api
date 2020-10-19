@@ -11,7 +11,7 @@ const Account = sequelize.define('account', {
   },
   name: {
     type: Sequelize.STRING,
-    unique: true,
+    unique: false,
   },
   amount: Sequelize.DECIMAL(9, 2),
 })
