@@ -1,5 +1,15 @@
 const User = require('../models/user')
 
+exports.postLogin = (req, res, next) => {
+  const { email, password } = req.body
+
+  if (password === process.env.TEMPORARY_PASSWORD) {
+    res.status(200).json({ success: true, msg: 'User loged in !' })
+  } else {
+    res.status(500).json({ success: false, error })
+  }
+}
+
 exports.getUsers = (req, res, next) => {
   ;(async () => {
     try {

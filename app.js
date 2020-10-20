@@ -45,9 +45,14 @@ app.use(express.json())
 
 app.use(getCurrentUser)
 
+// ROUTES
 app.use('/api/v1', userRoutes)
+
 app.use('/api/v1', accountsRoutes)
+
 app.use(errorController.get404)
+
+// LAUNCH SERVER
 ;(async () => {
   try {
     // await sequelize.sync({ force: true })
