@@ -4,7 +4,6 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 require('dotenv').config()
 
-// const { cors } = require('./middlewares/cors')
 const getCurrentUser = require('./middlewares/getCurrentUser')
 
 const sequelize = require('./utils/database')
