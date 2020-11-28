@@ -1,22 +1,28 @@
 const jwt = require('jsonwebtoken')
 
-const authenticateJWT = (req, res, next) => {
-  console.log('mimimidleware !!')
+const User = require('../models/user')
 
+const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization
-  console.log('🚀 ~ file: authenticateJWT.js ~ line 7 ~ authenticateJWT ~ authHeader', authHeader)
 
   if (authHeader) {
     const token = authHeader.split(' ')[1]
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decodedToken) => {
       if (err) {
         return res.sendStatus(403)
       }
 
-      console.log('🚀 ~ file: authenticateJWT.js ~ line 20 ~ jwt.verify ~ decodedToken', decodedToken)
       req.decodedToken = decodedToken
-      next()
+
+      try {
+        const user = await User.findOne({ where: { email: decodedToken.data } })
+        req.user = user
+
+        next()
+      } catch (error) {
+        console.log('error', error)
+      }
     })
   } else {
     res.sendStatus(401)

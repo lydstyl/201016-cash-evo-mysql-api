@@ -4,8 +4,6 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 require('dotenv').config()
 
-const getCurrentUser = require('./middlewares/getCurrentUser')
-
 const sequelize = require('./utils/database')
 const User = require('./models/user')
 const Account = require('./models/account')
@@ -41,8 +39,6 @@ app.use(cors())
 // app.use(bodyParser.urlencoded({ extended: false }))
 // Body parser
 app.use(express.json())
-
-app.use(getCurrentUser)
 
 // ROUTES
 app.use('/api/v1', userRoutes)
