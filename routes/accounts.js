@@ -2,12 +2,13 @@ const express = require('express')
 
 const accountsController = require('../controllers/accounts')
 const momentsController = require('../controllers/moments')
+const authenticateJWT = require('../middlewares/authenticateJWT')
 
 const router = express.Router()
 
 // ACCOUNT ROUTES
 router.post('/accounts', accountsController.postOneUserAccount)
-router.get('/accounts', accountsController.getAllUserAccounts)
+router.get('/accounts', authenticateJWT, accountsController.getAllUserAccounts)
 router.put('/accounts/:id', accountsController.putOneUserAccount)
 router.delete('/accounts/:id', accountsController.deleteOneUserAccount)
 
