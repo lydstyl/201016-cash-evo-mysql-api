@@ -1,12 +1,18 @@
+const jwt = require('jsonwebtoken')
+
 const User = require('../models/user')
 
 exports.postLogin = (req, res, next) => {
   const { email, password } = req.body
 
   if (password === process.env.TEMPORARY_PASSWORD) {
-    res.status(200).json({ success: true, msg: 'User loged in !' })
+    const token = jwt.sign({
+      data: email
+    }, 'secret', { expiresIn: '1h' })
+
+    res.status(200).json({ success: true, msg: 'User loged in !', token })
   } else {
-    res.status(500).json({ success: false, error })
+    res.status(500).json({ success: false, msg: 'Error in postLogin controller' })
   }
 }
 

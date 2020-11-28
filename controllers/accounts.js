@@ -45,7 +45,7 @@ exports.putOneUserAccount = async (req, res, next) => {
       }
     })
 
-    account = accounts[0]
+    const account = accounts[0]
 
     await account.update({ name: req.body.name })
 
@@ -66,7 +66,7 @@ exports.deleteOneUserAccount = async (req, res, next) => {
       where: { id: req.params.id }
     })
 
-    account = accounts[0]
+    const account = accounts[0]
 
     await account.destroy()
 
