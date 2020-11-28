@@ -7,9 +7,9 @@ const Moment = sequelize.define('moment', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
-    primaryKey: true,
+    primaryKey: true
   },
-  amount: Sequelize.DECIMAL(9, 2),
+  amount: Sequelize.DECIMAL(9, 2)
 })
 
 module.exports = Moment

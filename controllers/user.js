@@ -14,7 +14,7 @@ exports.getUsers = (req, res, next) => {
   ;(async () => {
     try {
       const users = await User.findAll({
-        where: { email: 'lydstyl@gmail.com' },
+        where: { email: 'lydstyl@gmail.com' }
       })
 
       res

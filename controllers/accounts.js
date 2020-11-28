@@ -41,8 +41,8 @@ exports.putOneUserAccount = async (req, res, next) => {
   try {
     const accounts = await req.user.getAccounts({
       where: {
-        id: req.params.id,
-      },
+        id: req.params.id
+      }
     })
 
     account = accounts[0]
@@ -63,7 +63,7 @@ exports.putOneUserAccount = async (req, res, next) => {
 exports.deleteOneUserAccount = async (req, res, next) => {
   try {
     const accounts = await req.user.getAccounts({
-      where: { id: req.params.id },
+      where: { id: req.params.id }
     })
 
     account = accounts[0]

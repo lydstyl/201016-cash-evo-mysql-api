@@ -7,13 +7,13 @@ const Account = sequelize.define('account', {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
-    primaryKey: true,
+    primaryKey: true
   },
   name: {
     type: Sequelize.STRING,
-    unique: false,
+    unique: false
   },
-  amount: Sequelize.DECIMAL(9, 2),
+  amount: Sequelize.DECIMAL(9, 2)
 })
 
 module.exports = Account
