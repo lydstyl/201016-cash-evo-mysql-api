@@ -53,7 +53,7 @@ app.use(errorController.get404)
     // await sequelize.sync({ force: true })
     await sequelize.sync()
 
-    const user = await User.findByPk(1)
+    // const user = await User.findByPk(1)
 
     // if (!user) {
     //   await User.create({ name: 'Gab', email: 'lydstyl@gmail.com' })
