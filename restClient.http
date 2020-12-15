@@ -1,0 +1,12 @@
+###
+GET http://localhost:5000/api/v1/users  
+
+
+###
+POST http://localhost:5000/api/v1/login  HTTP/1.1
+content-type: application/json
+
+{
+    "email": "lydstyl@gmail.com",
+    "password": "xxx"
+}
