@@ -40,6 +40,32 @@ exports.postUsers = async (req, res, next) => {
   }
 }
 
+// @desc    Delete user
+// @route   DELETE /api/v1/users
+// @access  Public
+exports.deleteUser = async (req, res, next) => {
+  try {
+    const { email, password } = req.body
+
+    const result = await User.destroy({
+      where: { email, password }
+    })
+    console.log('🚀 ~ exports.deleteUser ~ result', result)
+
+    let msg = 'User removed'
+
+    if (result === 0) msg = 'Wrong email or password'
+
+    res
+      .status(200)
+      .json({ success: true, msg })
+  } catch (error) {
+    console.log('🚀 ~ exports.postUsers= ~ error', error)
+
+    res.status(500).json({ success: false, error })
+  }
+}
+
 // @desc    Login user
 // @route   GET /api/v1/users
 // @access  Public
