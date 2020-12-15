@@ -3,7 +3,7 @@ POST http://localhost:5000/api/v1/users
 content-type: application/json
 
 {
-    "email": "test3@gmail.com",
+    "email": "test@gmail.com",
     "password": "test"
 }
 
@@ -26,7 +26,7 @@ content-type: application/json
 
 {
     "email": "test@gmail.com",
-    "password": "test"
+    "password": "hello"
 }
 
 
@@ -36,6 +36,6 @@ POST http://localhost:5000/api/v1/login
 content-type: application/json
 
 {
-    "email": "test3@gmail.com",
+    "email": "test@gmail.com",
     "password": "test"
 }

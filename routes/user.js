@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.post('/users', userController.postUser)
 
-router.get('/users', userController.getUsers)
+// router.get('/users', userController.getUsers) // todo desable this route
 
 router.put('/users', userController.putUser)
 

@@ -46,6 +46,8 @@ exports.postUser = async (req, res, next) => {
 
     const user = result.dataValues
 
+    user.password = undefined
+
     res
       .status(200)
       .json({ success: true, msg: 'User created', data: user })
@@ -55,8 +57,6 @@ exports.postUser = async (req, res, next) => {
     res.status(500).json({ success: false, error })
   }
 }
-
-// todo desable this route
 
 // @desc    Get all users
 // @route   GET /api/v1/users
@@ -88,32 +88,23 @@ exports.getUsers = (req, res, next) => {
 // @access  Public
 exports.putUser = async (req, res, next) => {
   try {
-    console.log('🚀 ')
-    const user = await User.findOne({ where: { email: 'lydstyl@gmail.com' } })
-    console.log('🚀 ~ exports.putUser= ~ user', user)
-    user.password = 'xxx'
-    user.save()
-    res.status(200).json({ success: true, msg: 'User edited.', user })
+    const { email, password, newPassword } = req.body
 
-    // const { email, password, newPassword } = req.body
-    // unhash password
-    // const user = await User.findOne({ where: { email } })
-    // bcrypt.compare(password, user.password, function (err, result) {
-    //   if (err) {
-    //     console.log('🚀 ~ putUser err', err)
-    //   } else {
-    //     if (result) {
-    //       console.log('🚀 ~ result', result)
+    const user = await User.findOne({ where: { email } })
 
-    //       user.password = newPassword
-    //       user.save()
+    const isGoodPassword = await comparePasswords(password, user.password)
 
-    //       res.status(200).json({ success: true, msg: 'User edited.' })
-    //     } else {
-    //       res.status(500).json({ success: false, msg: 'Error in putUser controller' })
-    //     }
-    //   }
-    // })
+    if (isGoodPassword) {
+      const hashedPassword = await getHash(newPassword)
+
+      user.password = hashedPassword
+
+      user.save()
+
+      res.status(200).json({ success: true, msg: 'User edited.' })
+    } else {
+      res.status(500).json({ success: false, msg: 'Wrong actual password.' })
+    }
   } catch (error) {
     console.log('🚀 ~ exports.putUser= ~ error', error)
     res.status(500).json({ success: false, error })
@@ -127,15 +118,18 @@ exports.deleteUser = async (req, res, next) => {
   try {
     const { email, password } = req.body
 
-    // todo unhash password
+    const user = await User.findOne({ where: { email } })
 
-    const result = await User.destroy({
-      where: { email, password }
-    })
+    const isGoodPassword = await comparePasswords(password, user.password)
 
     let msg = 'User removed'
-
-    if (result === 0) msg = 'Wrong email or password'
+    if (isGoodPassword) {
+      await User.destroy({
+        where: { email }
+      })
+    } else {
+      msg = 'Wrong email or password'
+    }
 
     res
       .status(200)
@@ -156,16 +150,20 @@ exports.postLogin = async (req, res, next) => {
 
     const user = await User.findOne({ where: { email } })
 
-    const isSamePassword = await comparePasswords(password, user.password)
+    if (!user) {
+      res.status(400).json({ success: false, msg: 'Wrong email.' })
+    }
 
-    if (isSamePassword) {
+    const isGoodPassword = await comparePasswords(password, user.password)
+
+    if (isGoodPassword) {
       const token = jwt.sign({
         data: email
       }, process.env.JWT_SECRET, { expiresIn: '1h' })
 
       res.status(200).json({ success: true, msg: 'User loged in !', token })
     } else {
-      res.status(500).json({ success: false, msg: 'Error in postLogin controller' })
+      res.status(500).json({ success: false, msg: 'Wrong password.' })
     }
   } catch (error) {
     console.log('🚀 ~ exports.postLogin= ~ error', error)
