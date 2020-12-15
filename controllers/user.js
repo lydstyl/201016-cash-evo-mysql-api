@@ -3,33 +3,52 @@ const jwt = require('jsonwebtoken')
 
 const User = require('../models/user')
 
+function getHash (myPlaintextPassword) {
+  return new Promise((resolve, reject) => {
+    const saltRounds = 10
+    bcrypt.hash(myPlaintextPassword, saltRounds, async (err, hash) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(hash)
+      }
+    })
+  })
+}
+
+function comparePasswords (password, hashedPassword) {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, hashedPassword, (err, result) => {
+      if (err) {
+        reject(err)
+      } else {
+        if (result) {
+          resolve(true) // passwords are the same
+        } else {
+          resolve(false) // passwords are not the same
+        }
+      }
+    })
+  })
+}
+
 // @desc    Create user === sign up
 // @route   POST /api/v1/users
 // @access  Public
-exports.postUsers = async (req, res, next) => {
+exports.postUser = async (req, res, next) => {
   try {
-    let { email, password } = req.body
+    const { email, password } = req.body
 
     // hash password
+    const hash = await getHash(password)
 
-    const saltRounds = 10
-    const myPlaintextPassword = password
-    bcrypt.hash(myPlaintextPassword, saltRounds, async function (err, hash) {
-      // Store hash in your password DB.
-      if (err) {
-        console.log('🚀 ~ bcrypt.hash ~ err', err)
-      } else {
-        password = hash
+    const result = await User.create({ email, password: hash })
 
-        const result = await User.create({ email, password })
+    const user = result.dataValues
 
-        const user = result.dataValues
-
-        res
-          .status(200)
-          .json({ success: true, msg: 'User created', data: user })
-      }
-    })
+    res
+      .status(200)
+      .json({ success: true, msg: 'User created', data: user })
   } catch (error) {
     console.log('🚀 ~ exports.postUsers= ~ error', error)
 
@@ -62,6 +81,43 @@ exports.getUsers = (req, res, next) => {
       res.status(500).json({ success: false, error })
     }
   })()
+}
+
+// @desc    Edit user
+// @route   PUT /api/v1/users
+// @access  Public
+exports.putUser = async (req, res, next) => {
+  try {
+    console.log('🚀 ')
+    const user = await User.findOne({ where: { email: 'lydstyl@gmail.com' } })
+    console.log('🚀 ~ exports.putUser= ~ user', user)
+    user.password = 'xxx'
+    user.save()
+    res.status(200).json({ success: true, msg: 'User edited.', user })
+
+    // const { email, password, newPassword } = req.body
+    // unhash password
+    // const user = await User.findOne({ where: { email } })
+    // bcrypt.compare(password, user.password, function (err, result) {
+    //   if (err) {
+    //     console.log('🚀 ~ putUser err', err)
+    //   } else {
+    //     if (result) {
+    //       console.log('🚀 ~ result', result)
+
+    //       user.password = newPassword
+    //       user.save()
+
+    //       res.status(200).json({ success: true, msg: 'User edited.' })
+    //     } else {
+    //       res.status(500).json({ success: false, msg: 'Error in putUser controller' })
+    //     }
+    //   }
+    // })
+  } catch (error) {
+    console.log('🚀 ~ exports.putUser= ~ error', error)
+    res.status(500).json({ success: false, error })
+  }
 }
 
 // @desc    Delete user
@@ -98,24 +154,19 @@ exports.postLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body
 
-    // unhash password
     const user = await User.findOne({ where: { email } })
 
-    bcrypt.compare(password, user.password, function (err, result) {
-      if (err) {
-        console.log('🚀 ~ err', err)
-      } else {
-        if (result) {
-          const token = jwt.sign({
-            data: email
-          }, process.env.JWT_SECRET, { expiresIn: '1h' })
+    const isSamePassword = await comparePasswords(password, user.password)
 
-          res.status(200).json({ success: true, msg: 'User loged in !', token })
-        } else {
-          res.status(500).json({ success: false, msg: 'Error in postLogin controller' })
-        }
-      }
-    })
+    if (isSamePassword) {
+      const token = jwt.sign({
+        data: email
+      }, process.env.JWT_SECRET, { expiresIn: '1h' })
+
+      res.status(200).json({ success: true, msg: 'User loged in !', token })
+    } else {
+      res.status(500).json({ success: false, msg: 'Error in postLogin controller' })
+    }
   } catch (error) {
     console.log('🚀 ~ exports.postLogin= ~ error', error)
   }

@@ -1,23 +1,23 @@
-###
-GET http://localhost:5000/api/v1/users  
-
-###
-# POST http://localhost:5000/api/v1/login  HTTP/1.1
-POST http://localhost:5000/api/v1/login
-content-type: application/json
-
-{
-    "email": "test@gmail.com",
-    "password": "test"
-}
-
 ### create user === signup
 POST http://localhost:5000/api/v1/users
 content-type: application/json
 
 {
-    "email": "test@gmail.com",
+    "email": "test3@gmail.com",
     "password": "test"
+}
+
+###
+GET http://localhost:5000/api/v1/users  
+
+###
+PUT http://localhost:5000/api/v1/users
+content-type: application/json
+
+{
+    "email": "test@gmail.com",
+    "password": "test",
+    "newPassword": "hello"
 }
 
 ### delete user
@@ -26,5 +26,16 @@ content-type: application/json
 
 {
     "email": "test@gmail.com",
+    "password": "test"
+}
+
+
+###
+# POST http://localhost:5000/api/v1/login  HTTP/1.1
+POST http://localhost:5000/api/v1/login
+content-type: application/json
+
+{
+    "email": "test3@gmail.com",
     "password": "test"
 }
