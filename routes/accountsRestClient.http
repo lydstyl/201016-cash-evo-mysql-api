@@ -1,0 +1,44 @@
+# ### user create
+# POST http://localhost:5000/api/v1/users
+# content-type: application/json
+
+# {
+#     "email": "test@gmail.com",
+#     "password": "test"
+# }
+
+# ### users get
+# GET http://localhost:5000/api/v1/users  
+
+### user's accounts get
+GET http://localhost:5000/api/v1/accounts 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2MDgwNjE2MTcsImV4cCI6MTYwODA2NTIxN30.bj67zXe83J7jVDurzltKOJGbPzAHt91F3PFpxh54SAY
+
+
+# ### user edit
+# PUT http://localhost:5000/api/v1/users
+# content-type: application/json
+
+# {
+#     "email": "test@gmail.com",
+#     "password": "test",
+#     "newPassword": "hello"
+# }
+
+# ### user delete
+# DELETE http://localhost:5000/api/v1/users
+# content-type: application/json
+
+# {
+#     "email": "test@gmail.com",
+#     "password": "hello"
+# }
+
+### user login
+POST http://localhost:5000/api/v1/login
+content-type: application/json
+
+{
+    "email": "test@gmail.com",
+    "password": "test"
+}

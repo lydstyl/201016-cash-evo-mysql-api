@@ -55,9 +55,9 @@ app.use(errorController.get404)
 
     const user = await User.findByPk(1)
 
-    if (!user) {
-      await User.create({ name: 'Gab', email: 'lydstyl@gmail.com' })
-    }
+    // if (!user) {
+    //   await User.create({ name: 'Gab', email: 'lydstyl@gmail.com' })
+    // }
 
     // todo get user from db instead of first user
 

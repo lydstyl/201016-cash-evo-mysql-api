@@ -32,6 +32,12 @@ function comparePasswords (password, hashedPassword) {
   })
 }
 
+function createJwtToken (email) {
+  return jwt.sign({
+    data: email
+  }, process.env.JWT_SECRET, { expiresIn: '1h' })
+}
+
 // @desc    Create user === sign up
 // @route   POST /api/v1/users
 // @access  Public
@@ -48,13 +54,15 @@ exports.postUser = async (req, res, next) => {
 
     user.password = undefined
 
+    const token = createJwtToken(email)
+
     res
       .status(200)
-      .json({ success: true, msg: 'User created', data: user })
+      .json({ success: true, msg: 'User created', token })
   } catch (error) {
     console.log('🚀 ~ exports.postUsers= ~ error', error)
 
-    res.status(500).json({ success: false, error })
+    res.status(500).json({ success: false, msg: error.message })
   }
 }
 
@@ -78,7 +86,7 @@ exports.getUsers = (req, res, next) => {
     } catch (error) {
       console.log('exports.getCurrentUser -> error', error)
 
-      res.status(500).json({ success: false, error })
+      res.status(500).json({ success: false, msg: error.message })
     }
   })()
 }
@@ -107,7 +115,7 @@ exports.putUser = async (req, res, next) => {
     }
   } catch (error) {
     console.log('🚀 ~ exports.putUser= ~ error', error)
-    res.status(500).json({ success: false, error })
+    res.status(500).json({ success: false, msg: error.message })
   }
 }
 
@@ -137,7 +145,7 @@ exports.deleteUser = async (req, res, next) => {
   } catch (error) {
     console.log('🚀 ~ exports.postUsers= ~ error', error)
 
-    res.status(500).json({ success: false, error })
+    res.status(500).json({ success: false, msg: error.message })
   }
 }
 
@@ -152,20 +160,19 @@ exports.postLogin = async (req, res, next) => {
 
     if (!user) {
       res.status(400).json({ success: false, msg: 'Wrong email.' })
-    }
-
-    const isGoodPassword = await comparePasswords(password, user.password)
-
-    if (isGoodPassword) {
-      const token = jwt.sign({
-        data: email
-      }, process.env.JWT_SECRET, { expiresIn: '1h' })
-
-      res.status(200).json({ success: true, msg: 'User loged in !', token })
     } else {
-      res.status(500).json({ success: false, msg: 'Wrong password.' })
+      const isGoodPassword = await comparePasswords(password, user.password)
+
+      if (isGoodPassword) {
+        const token = createJwtToken(email)
+
+        res.status(200).json({ success: true, msg: 'User loged in !', token })
+      } else {
+        res.status(500).json({ success: false, msg: 'Wrong password.' })
+      }
     }
   } catch (error) {
-    console.log('🚀 ~ exports.postLogin= ~ error', error)
+    console.log('🚀 ~ exports.postLogin= ~ error !!!', error)
+    res.status(500).json({ success: false, msg: error.message })
   }
 }
