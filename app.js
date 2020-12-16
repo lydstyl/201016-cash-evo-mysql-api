@@ -1,6 +1,5 @@
 require('colors')
 const express = require('express')
-const bodyParser = require('body-parser')
 const cors = require('cors')
 require('dotenv').config()
 
@@ -36,7 +35,6 @@ Moment.belongsTo(Account, {
 // app.all('*', cors)
 app.use(cors())
 
-// app.use(bodyParser.urlencoded({ extended: false }))
 // Body parser
 app.use(express.json())
 
@@ -52,14 +50,6 @@ app.use(errorController.get404)
   try {
     // await sequelize.sync({ force: true })
     await sequelize.sync()
-
-    // const user = await User.findByPk(1)
-
-    // if (!user) {
-    //   await User.create({ name: 'Gab', email: 'lydstyl@gmail.com' })
-    // }
-
-    // todo get user from db instead of first user
 
     const PORT = process.env.PORT || 5000
 
