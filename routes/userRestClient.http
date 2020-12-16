@@ -37,3 +37,12 @@ content-type: application/json
     "email": "test@gmail.com",
     "password": "test"
 }
+
+### user login
+# POST https://cash-evo-api.herokuapp.com/api/v1/login
+# content-type: application/json
+
+# {
+#     "email": "test@gmail.com",
+#     "password": "test"
+# }

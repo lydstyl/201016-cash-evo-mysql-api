@@ -1,6 +1,6 @@
 ### 
 POST http://localhost:5000/api/v1/accounts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2MDgwNjg0ODEsImV4cCI6MTYwODA3MjA4MX0.BNHuFyMSjVN0HScYM3oyfrlhild1Uw42zH_TdAwlyeQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2MDgwNjg0ODEsImV4cCI6MTYwODA3MjA4MX0.BNHuFyMSjVN0HScYM3oyfrlhild1Uw42zH_TdAwlyeR
 content-type: application/json
 
 {
@@ -10,9 +10,13 @@ content-type: application/json
 
 ### 
 GET http://localhost:5000/api/v1/accounts 
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2MDgwNjg0ODEsImV4cCI6MTYwODA3MjA4MX0.BNHuFyMSjVN0HScYM3oyfrlhild1Uw42zH_TdAwlyeQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2MDgxMTgwMDAsImV4cCI6MTYwODEyMTYwMH0.QSHE0AV-Lgpxy0GGGyxRUX_dxS5W1olg_ioUKqBZ-qd
+
+### 
+# GET https://cash-evo-api.herokuapp.com/api/v1/accounts 
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2MDgxMTgxODMsImV4cCI6MTYwODEyMTc4M30.BzxcUyAj_xszFxIdwuBZGfHJ1q87YE9FegX4PhiBM9B
 
 
 ### 
 DELETE http://localhost:5000/api/v1/accounts/1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2MDgwNjg0ODEsImV4cCI6MTYwODA3MjA4MX0.BNHuFyMSjVN0HScYM3oyfrlhild1Uw42zH_TdAwlyeQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoidGVzdEBnbWFpbC5jb20iLCJpYXQiOjE2MDgwNjg0ODEsImV4cCI6MTYwODA3MjA4MX0.BNHuFyMSjVN0HScYM3oyfrlhild1Uw42zH_TdAwlyeR
