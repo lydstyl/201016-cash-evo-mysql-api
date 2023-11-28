@@ -14,7 +14,7 @@ const Sequelize = require("sequelize")
 // // with Sqlite3
 const sequelize = new Sequelize({
     dialect: "sqlite",
-    storage: "./database.sqlite",
+    storage: process.env.DATABASE_PATH,
 })
 
 module.exports = sequelize
