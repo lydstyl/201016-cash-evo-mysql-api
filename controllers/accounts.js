@@ -26,7 +26,14 @@ exports.getAllUserAccounts = async (req, res, next) => {
   try {
     const accounts = await req.user.getAccounts({ include: Moment })
 
-    res.status(200).json({ success: true, data: accounts })
+    const sortedAccounts = accounts.sort((a, b) => {
+      if (a.amount < b.amount) {
+        return 1
+      }
+      return -1
+    })
+
+    res.status(200).json({ success: true, data: sortedAccounts })
   } catch (error) {
     console.log('exports.getAccounts -> error', error)
 
