@@ -34,8 +34,8 @@ POST http://localhost:5000/api/v1/login
 content-type: application/json
 
 {
-    "email": "test@gmail.com",
-    "password": "test"
+    "email": "lydstyl@gmail.com",
+    "password": "9nUF68rbYWZRSq7"
 }
 
 ### user login
